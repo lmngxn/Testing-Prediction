@@ -488,7 +488,7 @@ if st.session_state.uploaded_files_list:
                             s3.upload_file(submission_save_path, 'user-corrections', submission_file_name)
                             #log the metrics
                             original_prediction_key = f"{file_name_key_part}_original_predictions"
-                            current_metrics_entry = logging(st.session_state[original_prediction_key], csv_df_for_submit, submission_file_name)
+                            current_metrics_entry = logging(st.session_state[original_prediction_key], csv_data_submit, submission_file_name)
 
                             # Append metrics to a single JSON file in S3
                             try:
