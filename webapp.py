@@ -470,7 +470,7 @@ if st.session_state.uploaded_files_list:
                     csv_df_for_submit = edited_df.copy()
                     csv_df_for_submit = reverse_hyperlink_for_col(csv_df_for_submit, 'Company Name')
                     csv_data_submit = csv_df_for_submit.to_csv(index=False).encode('utf-8')
-                    if st.download_button(f"Submit Final CSV for {uploaded_file.name}", key=f"submit_final_csv_{file_name_key_part}",data=csv_data,
+                    if st.download_button(f"Submit Final CSV for {uploaded_file.name}", key=f"submit_final_csv_{file_name_key_part}",data=csv_data_submit,
                         file_name=f"predicted_edited_{uploaded_file.name}",
                         mime='text/csv'):
                         if st.session_state.get(edited_df_key) is not None:
@@ -483,6 +483,7 @@ if st.session_state.uploaded_files_list:
                             # Upload to S3 bucket
                             #only upload the Company Name and Job Title columns with the predictions
                             pushed_df = st.session_state[edited_df_key][REQUIRED_COLUMNS + ['Predicted Function', 'Predicted Level', 'Predicted Industry']]
+                            pushed_df = reverse_hyperlink_for_col(pushed_df, 'Company Name')
                             # Save the edited DataFrame to the final submission path
                             pushed_df.to_csv(submission_save_path, index=False)
                             s3.upload_file(submission_save_path, 'user-corrections', submission_file_name)
