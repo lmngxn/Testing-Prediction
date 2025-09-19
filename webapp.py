@@ -41,14 +41,6 @@ except FileNotFoundError:
 # Title and description
 st.title("Get Job Function, Level, Industry predictions from CSV File")
 
-# Get who i am
-def who_am_i():
-    sts = boto3.client("sts", region_name="ap-southeast-1")
-    return sts.get_caller_identity()  # {"UserId": "...", "Account": "...", "Arn": "..."}
-
-st.write("Caller identity:")
-st.json(who_am_i())
-
 # Instructions
 instructions = """
 
